@@ -20,7 +20,7 @@ const HeroSection = ({
           </p>
         </div>
       </div>
-      <div className="flex flex-grow items-center justify-center pb-24 pt-24 lg:pb-32 xl:mb-24 md:min-h-full scale-125 xl:scale-150">
+      <div className="flex flex-grow items-center justify-center pb-24 pt-24 lg:pb-32 xl:mb-24 md:min-h-full scale-100 xl:scale-125">
         <CubeTempoAnimation />
       </div>
     </section>

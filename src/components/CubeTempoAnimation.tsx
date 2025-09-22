@@ -42,7 +42,7 @@ export default function CubeTempoAnimation() {
       <div
         id="app"
         style={{
-          scale: "1",
+          scale: "1.2",
           width: 150,
           height: 180,
           pointerEvents: "none",
