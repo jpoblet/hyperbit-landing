@@ -1,11 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "./ui/button";
-import { Moon, Sun, ArrowRight, Equal } from "lucide-react";
+import {
+  Moon,
+  Sun,
+  ArrowRight,
+  Equal,
+  Monitor,
+  ChevronDown,
+} from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+
+type Theme = "light" | "dark" | "system";
 
 const Navigation = () => {
   const [scrollY, setScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [theme, setTheme] = useState<Theme>("system");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,13 +39,69 @@ const Navigation = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Apply theme based on selection
+  useEffect(() => {
+    const applyTheme = () => {
+      const root = document.documentElement;
+
+      if (theme === "system") {
+        // Use system preference
+        const systemPrefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+        if (systemPrefersDark) {
+          root.classList.add("dark");
+        } else {
+          root.classList.remove("dark");
+        }
+      } else if (theme === "dark") {
+        root.classList.add("dark");
+      } else {
+        root.classList.remove("dark");
+      }
+    };
+
+    applyTheme();
+
+    // Listen for system theme changes when system is selected
+    if (theme === "system") {
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      const handleChange = () => applyTheme();
+
+      mediaQuery.addEventListener("change", handleChange);
+      return () => mediaQuery.removeEventListener("change", handleChange);
+    }
+  }, [theme]);
+
+  // Load saved theme preference on mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") as Theme;
+    if (savedTheme && ["light", "dark", "system"].includes(savedTheme)) {
+      setTheme(savedTheme);
+    }
+  }, []);
+
+  // Save theme preference
+  const handleThemeChange = (newTheme: Theme) => {
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+  };
+
   // Determine if navigation should have background (after scrolling starts)
   const hasBackground = scrollY > 0;
 
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    // You can add actual dark mode implementation here
-    document.documentElement.classList.toggle("dark");
+  // Get current theme icon
+  const getThemeIcon = () => {
+    switch (theme) {
+      case "light":
+        return <Sun className="w-5 h-5" />;
+      case "dark":
+        return <Moon className="w-5 h-5" />;
+      case "system":
+        return <Monitor className="w-5 h-5" />;
+      default:
+        return <Monitor className="w-5 h-5" />;
+    }
   };
 
   return (
@@ -55,7 +126,7 @@ const Navigation = () => {
             </div>
           </a>
 
-          {/* Right side: Navigation Links + CTA + Dark Mode Toggle */}
+          {/* Right side: Navigation Links + CTA + Theme Toggle */}
           <div className="flex items-center space-x-3">
             {/* Navigation Links */}
             <div className="hidden md:flex items-center gap-12 text-md mr-8">
@@ -84,18 +155,53 @@ const Navigation = () => {
               Launch app <ArrowRight className="w-4 h-4" />
             </Button>
 
-            {/* Dark/Light Mode Toggle */}
-            <Button
-              onClick={toggleDarkMode}
-              className="h-12 w-12 p-2 rounded-full text-foreground hover:bg-background transition-all hidden md:block "
-              aria-label="Toggle dark mode"
-            >
-              {isDarkMode ? (
-                <Sun className="w-5 h-5" />
-              ) : (
-                <Moon className="w-5 h-5" />
-              )}
-            </Button>
+            {/* Theme Toggle Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  className="h-12 px-3 rounded-full text-foreground hover:bg-background transition-all hidden md:flex items-center gap-1 data-[state=open]:bg-background-secondary data-[state=open]:border-foreground-secondary border border-transparent focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none focus:ring-0"
+                  aria-label="Toggle theme"
+                >
+                  {getThemeIcon()}
+                  <ChevronDown className="w-3 h-3 opacity-50" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="end"
+                className="w-36 p-0 bg-background rounded-xl"
+              >
+                <DropdownMenuItem
+                  onClick={() => handleThemeChange("light")}
+                  className="flex items-center gap-2 p-4 cursor-pointer"
+                >
+                  <Sun className="w-4 h-4" />
+                  Light
+                  {theme === "light" && (
+                    <div className="ml-auto w-2 h-2 bg-active rounded-full" />
+                  )}
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => handleThemeChange("dark")}
+                  className="flex items-center gap-2 p-4 cursor-pointer"
+                >
+                  <Moon className="w-4 h-4" />
+                  Dark
+                  {theme === "dark" && (
+                    <div className="ml-auto w-2 h-2 bg-active rounded-full" />
+                  )}
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => handleThemeChange("system")}
+                  className="flex items-center gap-2 p-4 cursor-pointer"
+                >
+                  <Monitor className="w-4 h-4" />
+                  System
+                  {theme === "system" && (
+                    <div className="ml-auto w-2 h-2 bg-active rounded-full" />
+                  )}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
 
             {/* Mobile Menu Button */}
             <div className="md:hidden">

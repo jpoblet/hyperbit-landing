@@ -28,6 +28,7 @@ module.exports = {
         "foreground-secondary": "var(--color-foreground-secondary)",
         "foreground-inverse": "var(--color-foreground-inverse)",
         accent: "var(--color-accent)",
+        active: "var(--color-active)",
       },
       borderRadius: {
         lg: "var(--radius)",

@@ -66,6 +66,7 @@
   --color-foreground-secondary: var(--boulder-500);
   --color-foreground-inverse: var(--polar);
   --color-accent: var(--peach-200);
+  --color-active: var(--peach-400);
 }
 
 .dark {
@@ -77,6 +78,7 @@
   --color-foreground-secondary: var(--boulder-500);
   --color-foreground-inverse: var(--boulder-950);
   --color-accent: var(--peach-900);
+  --color-active: var(--teal-500);
 }
 
 body {
