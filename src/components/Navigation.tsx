@@ -127,9 +127,9 @@ const Navigation = () => {
           </a>
 
           {/* Right side: Navigation Links + CTA + Theme Toggle */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center">
             {/* Navigation Links */}
-            <div className="hidden md:flex items-center gap-12 text-md mr-8">
+            <div className="hidden md:flex items-center gap-12 text-sm">
               <a
                 href="#solutions"
                 className="border-b border-1 border-transparent hover:border-foreground transition-colors "
@@ -151,7 +151,7 @@ const Navigation = () => {
             </div>
 
             {/* CTA Button */}
-            <Button className="flex gap-3 hover:gap-5 items-center text-md bg-background hover:bg-background-inverse font-normal hover:text-foreground-inverse h-12 pl-5 pr-4 rounded-full transition-all ">
+            <Button className="flex gap-2 hover:gap-4 ml-12 hover:ml-10 mr-4 items-center text-sm font-normal bg-background-inverse hover:bg-background text-foreground-inverse hover:text-foreground h-12 pl-5 pr-4 rounded-full transition-all ">
               Launch app <ArrowRight className="w-4 h-4" />
             </Button>
 
@@ -159,11 +159,11 @@ const Navigation = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
-                  className="h-12 px-3 rounded-full text-foreground hover:bg-background transition-all hidden md:flex items-center gap-1 data-[state=open]:bg-background-secondary data-[state=open]:border-foreground-secondary border border-transparent focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none focus:ring-0"
+                  className="h-12 px-3 rounded-full text-foreground hover:bg-background hidden md:flex items-center gap-1 data-[state=open]:bg-background data-[state=open]:border-foreground border border-transparent focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none focus:ring-0 group"
                   aria-label="Toggle theme"
                 >
                   {getThemeIcon()}
-                  <ChevronDown className="w-3 h-3 opacity-50" />
+                  <ChevronDown className="w-4 h-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent
@@ -172,7 +172,7 @@ const Navigation = () => {
               >
                 <DropdownMenuItem
                   onClick={() => handleThemeChange("light")}
-                  className="flex items-center gap-2 p-4 cursor-pointer"
+                  className="flex items-center gap-2 p-4 cursor-pointer hover:bg-background-secondary focus:bg-background-secondary"
                 >
                   <Sun className="w-4 h-4" />
                   Light
@@ -182,7 +182,7 @@ const Navigation = () => {
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => handleThemeChange("dark")}
-                  className="flex items-center gap-2 p-4 cursor-pointer"
+                  className="flex items-center gap-2 p-4 cursor-pointer hover:bg-background-secondary focus:bg-background-secondary"
                 >
                   <Moon className="w-4 h-4" />
                   Dark
@@ -192,7 +192,7 @@ const Navigation = () => {
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => handleThemeChange("system")}
-                  className="flex items-center gap-2 p-4 cursor-pointer"
+                  className="flex items-center gap-2 p-4 cursor-pointer hover:bg-background-secondary focus:bg-background-secondary"
                 >
                   <Monitor className="w-4 h-4" />
                   System
