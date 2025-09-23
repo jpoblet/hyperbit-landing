@@ -7,6 +7,7 @@ import {
   Equal,
   Monitor,
   ChevronDown,
+  X,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -21,6 +22,7 @@ const Navigation = () => {
   const [scrollY, setScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const [theme, setTheme] = useState<Theme>("system");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -81,6 +83,19 @@ const Navigation = () => {
     }
   }, []);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isMobileMenuOpen]);
+
   // Save theme preference
   const handleThemeChange = (newTheme: Theme) => {
     setTheme(newTheme);
@@ -105,117 +120,259 @@ const Navigation = () => {
   };
 
   return (
-    <nav
-      className={`fixed rounded-none md:rounded-full top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isVisible ? "translate-y-0" : "-translate-y-32"
-      } ${
-        hasBackground
-          ? "bg-white/40 dark:bg-white/10 backdrop-blur-3xl border-b md:border border-white/70 dark:border-white/20 md:mx-8 md:my-6"
-          : "bg-transparent border border-transparent"
-      }`}
-    >
-      <div className="pl-6 pr-4 py-4 md:pl-8 md:pr-5 md:py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <a href="/">
-            <div className="flex items-center">
-              <div className="text-2xl text-foreground hidden sm:flex">
-                Hyperbit
+    <>
+      <nav
+        className={`fixed rounded-none md:rounded-full top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isVisible ? "translate-y-0" : "-translate-y-32"
+        } ${
+          hasBackground
+            ? "bg-white/40 dark:bg-white/10 backdrop-blur-3xl border-b md:border border-white/70 dark:border-white/20 md:mx-8 md:my-6"
+            : "bg-transparent border border-transparent"
+        }`}
+      >
+        <div className="pl-6 pr-4 py-4 md:pl-8 md:pr-5 md:py-4">
+          <div className="flex items-center justify-between">
+            {/* Logo */}
+            <a href="/">
+              <div className="flex items-center">
+                <div className="text-2xl text-foreground hidden sm:flex">
+                  Hyperbit
+                </div>
+                <div className="text-4xl text-foreground sm:hidden">H</div>
               </div>
-              <div className="text-4xl text-foreground sm:hidden">H</div>
-            </div>
-          </a>
+            </a>
 
-          {/* Right side: Navigation Links + CTA + Theme Toggle */}
-          <div className="flex items-center">
-            {/* Navigation Links */}
-            <div className="hidden md:flex items-center gap-12 text-sm">
-              <a
-                href="#solutions"
-                className="border-b border-1 border-transparent hover:border-foreground transition-colors "
-              >
-                Solutions
-              </a>
-              <a
-                href="#technology"
-                className="border-b border-1 border-transparent hover:border-foreground transition-colors "
-              >
-                Technology
-              </a>
-              <a
-                href="#about"
-                className="border-b border-1 border-transparent hover:border-foreground transition-colors "
-              >
-                About
-              </a>
-            </div>
+            {/* Right side: Navigation Links + CTA + Theme Toggle */}
+            <div className="flex items-center">
+              {/* Navigation Links */}
+              <div className="hidden md:flex items-center gap-12 text-sm">
+                <a
+                  href="#solutions"
+                  className="border-b border-1 border-transparent hover:border-foreground transition-colors "
+                >
+                  Solutions
+                </a>
+                <a
+                  href="#technology"
+                  className="border-b border-1 border-transparent hover:border-foreground transition-colors "
+                >
+                  Technology
+                </a>
+                <a
+                  href="#about"
+                  className="border-b border-1 border-transparent hover:border-foreground transition-colors "
+                >
+                  About
+                </a>
+              </div>
 
-            {/* CTA Button */}
-            <Button className="flex gap-2 hover:gap-4 ml-12 hover:ml-10 mr-4 items-center text-sm font-normal bg-background-inverse hover:bg-background text-foreground-inverse hover:text-foreground h-12 pl-5 pr-4 rounded-full transition-all ">
-              Launch app <ArrowRight className="w-4 h-4" />
+              {/* CTA Button */}
+              <Button className="flex gap-2 hover:gap-4 ml-12 hover:ml-10 mr-4 items-center text-sm font-normal bg-background-inverse hover:bg-background text-foreground-inverse hover:text-foreground h-12 pl-5 pr-4 rounded-full transition-all ">
+                Launch app <ArrowRight className="w-4 h-4" />
+              </Button>
+
+              {/* Theme Toggle Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    className="h-12 px-3 rounded-full text-foreground hover:bg-background hidden md:flex items-center gap-1 data-[state=open]:bg-background data-[state=open]:border-foreground border border-transparent focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none focus:ring-0 group"
+                    aria-label="Toggle theme"
+                  >
+                    {getThemeIcon()}
+                    <ChevronDown className="w-4 h-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="end"
+                  className="w-36 p-0 bg-background rounded-xl"
+                >
+                  <DropdownMenuItem
+                    onClick={() => handleThemeChange("light")}
+                    className="flex items-center gap-2 p-4 cursor-pointer hover:bg-background-secondary focus:bg-background-secondary"
+                  >
+                    <Sun className="w-4 h-4" />
+                    Light
+                    {theme === "light" && (
+                      <div className="ml-auto w-2 h-2 bg-active rounded-full" />
+                    )}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => handleThemeChange("dark")}
+                    className="flex items-center gap-2 p-4 cursor-pointer hover:bg-background-secondary focus:bg-background-secondary"
+                  >
+                    <Moon className="w-4 h-4" />
+                    Dark
+                    {theme === "dark" && (
+                      <div className="ml-auto w-2 h-2 bg-active rounded-full" />
+                    )}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => handleThemeChange("system")}
+                    className="flex items-center gap-2 p-4 cursor-pointer hover:bg-background-secondary focus:bg-background-secondary"
+                  >
+                    <Monitor className="w-4 h-4" />
+                    System
+                    {theme === "system" && (
+                      <div className="ml-auto w-2 h-2 bg-active rounded-full" />
+                    )}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              {/* Mobile Menu Button */}
+              <div className="md:hidden">
+                <Button
+                  size="icon"
+                  className="text-foreground hover:bg-background rounded-full h-12 w-12"
+                  onClick={() => setIsMobileMenuOpen(true)}
+                >
+                  <Equal className="w-7 h-7" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Full Screen Mobile Menu */}
+      <div
+        className={`fixed inset-0 z-[60] bg-background transition-all duration-300 ease-in-out ${
+          isMobileMenuOpen
+            ? "opacity-100 translate-x-0"
+            : "opacity-0 translate-x-full pointer-events-none"
+        }`}
+      >
+        {/* Mobile Menu Header */}
+        <div className="flex items-center justify-between p-6">
+          <div className="text-2xl text-foreground">Hyperbit</div>
+          <Button
+            size="icon"
+            className="text-foreground hover:bg-background-secondary rounded-full h-12 w-12"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <X className="w-7 h-7" />
+          </Button>
+        </div>
+
+        {/* Mobile Menu Content */}
+        <div className="flex flex-col h-full px-6 pb-6">
+          {/* Navigation Links */}
+          <div
+            className={`flex flex-col gap-8 mt-12 transition-all duration-500 delay-100 ${
+              isMobileMenuOpen
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-8"
+            }`}
+          >
+            <a
+              href="#solutions"
+              className="text-3xl text-foreground hover:text-foreground-secondary transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Solutions
+            </a>
+            <a
+              href="#technology"
+              className="text-3xl text-foreground hover:text-foreground-secondary transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Technology
+            </a>
+            <a
+              href="#about"
+              className="text-3xl text-foreground hover:text-foreground-secondary transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              About
+            </a>
+          </div>
+
+          {/* CTA Button */}
+          <div
+            className={`mt-12 transition-all duration-500 delay-200 ${
+              isMobileMenuOpen
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-8"
+            }`}
+          >
+            <Button className="w-full flex gap-2 items-center text-lg font-normal bg-background-inverse hover:bg-background text-foreground-inverse hover:text-foreground h-14 rounded-full transition-all">
+              Launch app <ArrowRight className="w-5 h-5" />
             </Button>
+          </div>
 
-            {/* Theme Toggle Dropdown */}
+          {/* Theme Selection Dropdown */}
+          <div
+            className={`mt-12 transition-all duration-500 delay-300 ${
+              isMobileMenuOpen
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-8"
+            }`}
+          >
+            <h3 className="text-lg text-foreground mb-6">Theme</h3>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
-                  className="h-12 px-3 rounded-full text-foreground hover:bg-background hidden md:flex items-center gap-1 data-[state=open]:bg-background data-[state=open]:border-foreground border border-transparent focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none focus:ring-0 group"
-                  aria-label="Toggle theme"
+                  className="w-full h-14 px-4 rounded-xl text-foreground hover:bg-background-secondary border border-foreground/20 data-[state=open]:bg-background-secondary data-[state=open]:border-foreground/40 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none focus:ring-0 group justify-between"
+                  aria-label="Select theme"
                 >
-                  {getThemeIcon()}
+                  <div className="flex items-center gap-3">
+                    {getThemeIcon()}
+                    <span className="capitalize">{theme}</span>
+                  </div>
                   <ChevronDown className="w-4 h-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent
-                align="end"
-                className="w-36 p-0 bg-background rounded-xl"
+                align="center"
+                className="w-full p-0 bg-background rounded-xl z-[70]"
+                style={{ width: "var(--radix-dropdown-menu-trigger-width)" }}
+                sideOffset={8}
               >
                 <DropdownMenuItem
-                  onClick={() => handleThemeChange("light")}
-                  className="flex items-center gap-2 p-4 cursor-pointer hover:bg-background-secondary focus:bg-background-secondary"
+                  onClick={() => {
+                    handleThemeChange("light");
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="flex items-center gap-3 p-4 cursor-pointer hover:bg-background-secondary focus:bg-background-secondary"
                 >
-                  <Sun className="w-4 h-4" />
-                  Light
+                  <Sun className="w-5 h-5" />
+                  <span>Light</span>
                   {theme === "light" && (
-                    <div className="ml-auto w-2 h-2 bg-active rounded-full" />
+                    <div className="ml-auto w-3 h-3 bg-active rounded-full" />
                   )}
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => handleThemeChange("dark")}
-                  className="flex items-center gap-2 p-4 cursor-pointer hover:bg-background-secondary focus:bg-background-secondary"
+                  onClick={() => {
+                    handleThemeChange("dark");
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="flex items-center gap-3 p-4 cursor-pointer hover:bg-background-secondary focus:bg-background-secondary"
                 >
-                  <Moon className="w-4 h-4" />
-                  Dark
+                  <Moon className="w-5 h-5" />
+                  <span>Dark</span>
                   {theme === "dark" && (
-                    <div className="ml-auto w-2 h-2 bg-active rounded-full" />
+                    <div className="ml-auto w-3 h-3 bg-active rounded-full" />
                   )}
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => handleThemeChange("system")}
-                  className="flex items-center gap-2 p-4 cursor-pointer hover:bg-background-secondary focus:bg-background-secondary"
+                  onClick={() => {
+                    handleThemeChange("system");
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="flex items-center gap-3 p-4 cursor-pointer hover:bg-background-secondary focus:bg-background-secondary"
                 >
-                  <Monitor className="w-4 h-4" />
-                  System
+                  <Monitor className="w-5 h-5" />
+                  <span>System</span>
                   {theme === "system" && (
-                    <div className="ml-auto w-2 h-2 bg-active rounded-full" />
+                    <div className="ml-auto w-3 h-3 bg-active rounded-full" />
                   )}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-
-            {/* Mobile Menu Button */}
-            <div className="md:hidden">
-              <Button
-                size="icon"
-                className="text-foreground hover:bg-background rounded-full h-12 w-12"
-              >
-                <Equal className="w-7 h-7" />
-              </Button>
-            </div>
           </div>
         </div>
       </div>
-    </nav>
+    </>
   );
 };
 
