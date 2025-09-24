@@ -39,6 +39,7 @@ const NAVIGATION_CONFIG = {
 
 const Navigation = () => {
   const [scrollY, setScrollY] = useState(0);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const [theme, setTheme] = useState<Theme>("system");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -46,19 +47,29 @@ const Navigation = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      setScrollY(currentScrollY);
-
-      // Hide navigation after 600px scroll
-      if (currentScrollY > 600) {
-        setIsVisible(false);
-      } else {
+      
+      // Determine scroll direction
+      const scrollingUp = currentScrollY < lastScrollY;
+      const scrollingDown = currentScrollY > lastScrollY;
+      
+      // Show navigation if:
+      // 1. At the top (scrollY <= 600)
+      // 2. Scrolling up (regardless of position)
+      if (currentScrollY <= 600 || scrollingUp) {
         setIsVisible(true);
+      } 
+      // Hide navigation if scrolling down and past 600px
+      else if (scrollingDown && currentScrollY > 600) {
+        setIsVisible(false);
       }
+      
+      setLastScrollY(currentScrollY);
+      setScrollY(currentScrollY);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   // Apply theme based on selection
   useEffect(() => {
