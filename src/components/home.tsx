@@ -1,13 +1,11 @@
 import React from "react";
 import Navigation from "./Navigation";
 import HeroSection from "./HeroSection";
-import GradientBackground from "./GradientBackground";
 
 const HomePage = () => {
   return (
     <div className="min-h-screen">
       <Navigation />
-      <GradientBackground />
       <main>
         <section id="hero">
           <HeroSection />

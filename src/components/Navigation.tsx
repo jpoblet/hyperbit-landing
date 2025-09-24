@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import {
   Moon,
   Sun,
-  ArrowRight,
+  ArrowUpRight,
   Equal,
   Monitor,
   ChevronDown,
@@ -32,8 +32,8 @@ const NAVIGATION_CONFIG = {
     { label: "Docs", href: "#docs", icon: BookText },
   ],
   cta: {
-    label: "Launch app",
-    href: "#launch",
+    label: "Open app",
+    href: "#app",
   },
 };
 
@@ -47,22 +47,22 @@ const Navigation = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
+
       // Determine scroll direction
       const scrollingUp = currentScrollY < lastScrollY;
       const scrollingDown = currentScrollY > lastScrollY;
-      
+
       // Show navigation if:
       // 1. At the top (scrollY <= 600)
       // 2. Scrolling up (regardless of position)
       if (currentScrollY <= 600 || scrollingUp) {
         setIsVisible(true);
-      } 
+      }
       // Hide navigation if scrolling down and past 600px
       else if (scrollingDown && currentScrollY > 600) {
         setIsVisible(false);
       }
-      
+
       setLastScrollY(currentScrollY);
       setScrollY(currentScrollY);
     };
@@ -160,7 +160,7 @@ const Navigation = () => {
             : "bg-transparent border border-transparent"
         }`}
       >
-        <div className="pl-6 pr-4 py-4 md:pl-8 md:pr-5 md:py-4">
+        <div className="pl-6 pr-4 py-4 md:pl-10 md:pr-5 md:py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <a href={NAVIGATION_CONFIG.brand.href}>
@@ -177,7 +177,7 @@ const Navigation = () => {
             {/* Right side: Navigation Links + CTA + Theme Toggle */}
             <div className="flex items-center">
               {/* Navigation Links */}
-              <div className="hidden md:flex items-center gap-3 text-sm">
+              <div className="hidden md:flex items-center gap-2 text-sm">
                 {NAVIGATION_CONFIG.navItems.map((item) => {
                   const IconComponent = item.icon;
                   return (
@@ -195,7 +195,8 @@ const Navigation = () => {
 
               {/* CTA Button */}
               <Button className="flex gap-2 hover:gap-4 ml-6 hover:ml-4 mr-4 items-center text-sm font-normal bg-background-inverse hover:bg-background text-foreground-inverse hover:text-foreground h-12 pl-5 pr-4 rounded-full transition-all ">
-                {NAVIGATION_CONFIG.cta.label} <ArrowRight className="w-4 h-4" />
+                {NAVIGATION_CONFIG.cta.label}{" "}
+                <ArrowUpRight className="w-4 h-4" />
               </Button>
 
               {/* Theme Toggle Dropdown */}
@@ -318,7 +319,7 @@ const Navigation = () => {
             }`}
           >
             <Button className="w-full flex gap-2 items-center text-lg font-normal bg-background-inverse hover:bg-background text-foreground-inverse hover:text-foreground h-14 rounded-full transition-all">
-              {NAVIGATION_CONFIG.cta.label} <ArrowRight className="w-5 h-5" />
+              {NAVIGATION_CONFIG.cta.label} <ArrowUpRight className="w-5 h-5" />
             </Button>
           </div>
 
