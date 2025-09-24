@@ -1,6 +1,10 @@
 import React from "react";
 import Navigation from "./Navigation";
 import HeroSection from "./HeroSection";
+import MainSection from "./MainSection";
+import TechnologySection from "./TechnologySection";
+import MarketsSection from "./MarketsSection";
+import Footer from "./Footer";
 
 const HomePage = () => {
   return (
@@ -10,30 +14,19 @@ const HomePage = () => {
         <section id="hero">
           <HeroSection />
         </section>
-        <section
-          id="section-one"
-          className="flex items-center justify-center bg-background-secondary min-h-96"
-        >
-          SECTION ONE
+        <section id="main">
+          <MainSection />
         </section>
-        <section
-          id="section-two"
-          className="flex items-center justify-center bg-background min-h-96"
-        >
-          SECTION TWO
+        {/*
+        <section id="technology">
+          <TechnologySection />
         </section>
-        <section
-          id="section-three"
-          className="flex items-center justify-center bg-background-secondary min-h-96"
-        >
-          SECTION THREE
-        </section>
+        <section id="markets">
+          <MarketsSection />
+        </section>*/}
       </main>
 
-      {/* Footer */}
-      <footer className="flex items-center justify-center bg-background-inverse text-foreground-inverse min-h-96 py-12">
-        FOOTER
-      </footer>
+      <Footer />
     </div>
   );
 };

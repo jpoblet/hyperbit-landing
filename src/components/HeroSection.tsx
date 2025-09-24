@@ -10,7 +10,7 @@ interface HeroSectionProps {
 }
 
 const HeroSection = ({
-  title = "The decentralized orderbook for inverse perpetuals",
+  title = "The decentralized orderbook for inverse perpetual contracts",
   subtitle = [
     "Inverse perpetuals belong on-chain.",
     <br />,
