@@ -8,6 +8,8 @@ import {
   Monitor,
   ChevronDown,
   X,
+  BookText,
+  Globe,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -17,6 +19,23 @@ import {
 } from "./ui/dropdown-menu";
 
 type Theme = "light" | "dark" | "system";
+
+// Navigation configuration - change these to update all navigation items
+const NAVIGATION_CONFIG = {
+  brand: {
+    name: "Hyperbit",
+    shortName: "H",
+    href: "/",
+  },
+  navItems: [
+    { label: "Community", href: "#community", icon: Globe },
+    { label: "Docs", href: "#docs", icon: BookText },
+  ],
+  cta: {
+    label: "Launch app",
+    href: "#launch",
+  },
+};
 
 const Navigation = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -133,42 +152,39 @@ const Navigation = () => {
         <div className="pl-6 pr-4 py-4 md:pl-8 md:pr-5 md:py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <a href="/">
+            <a href={NAVIGATION_CONFIG.brand.href}>
               <div className="flex items-center">
                 <div className="text-2xl text-foreground hidden sm:flex">
-                  Hyperbit
+                  {NAVIGATION_CONFIG.brand.name}
                 </div>
-                <div className="text-4xl text-foreground sm:hidden">H</div>
+                <div className="text-4xl text-foreground sm:hidden">
+                  {NAVIGATION_CONFIG.brand.shortName}
+                </div>
               </div>
             </a>
 
             {/* Right side: Navigation Links + CTA + Theme Toggle */}
             <div className="flex items-center">
               {/* Navigation Links */}
-              <div className="hidden md:flex items-center gap-12 text-sm">
-                <a
-                  href="#solutions"
-                  className="border-b border-1 border-transparent hover:border-foreground transition-colors "
-                >
-                  Solutions
-                </a>
-                <a
-                  href="#technology"
-                  className="border-b border-1 border-transparent hover:border-foreground transition-colors "
-                >
-                  Technology
-                </a>
-                <a
-                  href="#about"
-                  className="border-b border-1 border-transparent hover:border-foreground transition-colors "
-                >
-                  About
-                </a>
+              <div className="hidden md:flex items-center gap-3 text-sm">
+                {NAVIGATION_CONFIG.navItems.map((item) => {
+                  const IconComponent = item.icon;
+                  return (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      className="flex items-center gap-2 bg-transparent hover:bg-background h-12 pl-4 pr-5 rounded-full transition-all"
+                    >
+                      <IconComponent className="w-4 h-4" />
+                      {item.label}
+                    </a>
+                  );
+                })}
               </div>
 
               {/* CTA Button */}
-              <Button className="flex gap-2 hover:gap-4 ml-12 hover:ml-10 mr-4 items-center text-sm font-normal bg-background-inverse hover:bg-background text-foreground-inverse hover:text-foreground h-12 pl-5 pr-4 rounded-full transition-all ">
-                Launch app <ArrowRight className="w-4 h-4" />
+              <Button className="flex gap-2 hover:gap-4 ml-6 hover:ml-4 mr-4 items-center text-sm font-normal bg-background-inverse hover:bg-background text-foreground-inverse hover:text-foreground h-12 pl-5 pr-4 rounded-full transition-all ">
+                {NAVIGATION_CONFIG.cta.label} <ArrowRight className="w-4 h-4" />
               </Button>
 
               {/* Theme Toggle Dropdown */}
@@ -244,7 +260,9 @@ const Navigation = () => {
       >
         {/* Mobile Menu Header */}
         <div className="flex items-center justify-between p-6">
-          <div className="text-2xl text-foreground">Hyperbit</div>
+          <div className="text-2xl text-foreground">
+            {NAVIGATION_CONFIG.brand.name}
+          </div>
           <Button
             size="icon"
             className="text-foreground hover:bg-background-secondary rounded-full h-12 w-12"
@@ -264,27 +282,20 @@ const Navigation = () => {
                 : "opacity-0 translate-y-8"
             }`}
           >
-            <a
-              href="#solutions"
-              className="text-3xl text-foreground hover:text-foreground-secondary transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Solutions
-            </a>
-            <a
-              href="#technology"
-              className="text-3xl text-foreground hover:text-foreground-secondary transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Technology
-            </a>
-            <a
-              href="#about"
-              className="text-3xl text-foreground hover:text-foreground-secondary transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              About
-            </a>
+            {NAVIGATION_CONFIG.navItems.map((item) => {
+              const IconComponent = item.icon;
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="flex items-center gap-4 text-3xl text-foreground hover:text-foreground-secondary transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <IconComponent className="w-8 h-8" />
+                  {item.label}
+                </a>
+              );
+            })}
           </div>
 
           {/* CTA Button */}
@@ -296,7 +307,7 @@ const Navigation = () => {
             }`}
           >
             <Button className="w-full flex gap-2 items-center text-lg font-normal bg-background-inverse hover:bg-background text-foreground-inverse hover:text-foreground h-14 rounded-full transition-all">
-              Launch app <ArrowRight className="w-5 h-5" />
+              {NAVIGATION_CONFIG.cta.label} <ArrowRight className="w-5 h-5" />
             </Button>
           </div>
 
