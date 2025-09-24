@@ -67,6 +67,7 @@
   --color-foreground-inverse: var(--polar);
   --color-accent: var(--peach-200);
   --color-active: var(--peach-400);
+  --foreground-invert: 0;
 }
 
 .dark {
@@ -79,6 +80,7 @@
   --color-foreground-inverse: var(--boulder-950);
   --color-accent: var(--peach-900);
   --color-active: var(--teal-500);
+  --foreground-invert: 1;
 }
 
 body {

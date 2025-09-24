@@ -165,12 +165,24 @@ const Navigation = () => {
             {/* Logo */}
             <a href={NAVIGATION_CONFIG.brand.href}>
               <div className="flex items-center">
-                <div className="text-2xl text-foreground hidden sm:flex">
-                  {NAVIGATION_CONFIG.brand.name}
-                </div>
-                <div className="text-4xl text-foreground sm:hidden">
-                  {NAVIGATION_CONFIG.brand.shortName}
-                </div>
+                <img
+                  src="/images/Hyperbit_logo_black.svg"
+                  alt={NAVIGATION_CONFIG.brand.name}
+                  className="h-6 hidden sm:flex"
+                  style={{
+                    filter:
+                      "brightness(0) saturate(100%) invert(var(--foreground-invert))",
+                  }}
+                />
+                <img
+                  src="/images/Hyperbit_glyph_black.svg"
+                  alt={NAVIGATION_CONFIG.brand.shortName}
+                  className="h-6 sm:hidden"
+                  style={{
+                    filter:
+                      "brightness(0) saturate(100%) invert(var(--foreground-invert))",
+                  }}
+                />
               </div>
             </a>
 
@@ -272,9 +284,15 @@ const Navigation = () => {
       >
         {/* Mobile Menu Header */}
         <div className="flex items-center justify-between p-6">
-          <div className="text-2xl text-foreground">
-            {NAVIGATION_CONFIG.brand.name}
-          </div>
+          <img
+            src="/images/Hyperbit_logo_black.svg"
+            alt={NAVIGATION_CONFIG.brand.name}
+            className="h-6"
+            style={{
+              filter:
+                "brightness(0) saturate(100%) invert(var(--foreground-invert))",
+            }}
+          />
           <Button
             size="icon"
             className="text-foreground hover:bg-background-secondary rounded-full h-12 w-12"
