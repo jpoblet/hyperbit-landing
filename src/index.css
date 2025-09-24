@@ -63,7 +63,7 @@
   --color-background-secondary: var(--boulder-100);
   --color-background-inverse: var(--boulder-950);
   --color-foreground: var(--boulder-950);
-  --color-foreground-secondary: var(--boulder-500);
+  --color-foreground-secondary: var(--boulder-600);
   --color-foreground-inverse: var(--polar);
   --color-accent: var(--peach-200);
   --color-active: var(--peach-400);
@@ -75,7 +75,7 @@
   --color-background-secondary: var(--boulder-800);
   --color-background-inverse: var(--polar);
   --color-foreground: var(--boulder-100);
-  --color-foreground-secondary: var(--boulder-500);
+  --color-foreground-secondary: var(--boulder-400);
   --color-foreground-inverse: var(--boulder-950);
   --color-accent: var(--peach-900);
   --color-active: var(--teal-500);
