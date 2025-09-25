@@ -20,9 +20,9 @@ const HomePage = () => {
         <section id="technology">
           <TechnologySection />
         </section>
-        {/*<section id="markets">
+        <section id="markets">
           <MarketsSection />
-        </section>*/}
+        </section>
       </main>
 
       <Footer />

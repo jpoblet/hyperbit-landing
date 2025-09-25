@@ -1,5 +1,5 @@
 import React from "react";
-import { Shield, Zap, Globe } from "lucide-react";
+import { MoveRight } from "lucide-react";
 
 interface MainSectionProps {
   textBar?: string;
@@ -9,78 +9,56 @@ interface MainSectionProps {
     title: string;
     description: string;
   }>;
-  calloutText?: string;
+  calloutTextOne?: string;
+  calloutTextTwo?: string;
 }
 
 const MainSection = ({
-  textBar = "Built for the future of decentralized finance",
-  mainTitle = "Trade inverse perpetuals without compromise",
-  pillars = [
-    {
-      icon: <Shield className="w-8 h-8" />,
-      title: "Non-custodial",
-      description:
-        "Your assets remain in your wallet. Trade directly from your own keys without giving up control.",
-    },
-    {
-      icon: <Zap className="w-8 h-8" />,
-      title: "No KYC Required",
-      description:
-        "Access global markets instantly. No identity verification, no waiting periods, no restrictions.",
-    },
-    {
-      icon: <Globe className="w-8 h-8" />,
-      title: "Fully On-chain",
-      description:
-        "Every trade is transparent and verifiable. Built on decentralized infrastructure you can trust.",
-    },
-  ],
-  calloutText = "When there's no fiat involved, why give up custody or submit to KYC? Hyperbit keeps inverse perpetuals where they belong — on-chain.",
+  textBar = "Markets",
+  subTitle = "Trade the pairs that matter",
+  mainTitle = "Starting with the markets that drive inverse perpetual contracts demand",
 }: MainSectionProps) => {
   return (
-    <section className="w-full bg-background text-foreground">
+    <section className="flex flex-col w-full bg-background text-foreground items-center">
       {/* Text Bar */}
-      <div className="w-full bg-background-secondary py-4">
-        <div className="max-w-7xl mx-auto px-8 lg:px-12 xl:px-16">
-          <p className="text-center text-sm font-medium text-foreground-secondary uppercase tracking-wider">
+      <div className="w-full bg-background-tertiary py-4">
+        <div className="px-8 lg:px-12 xl:px-16">
+          <p className="text-xs text-foreground uppercase tracking-widest">
             {textBar}
           </p>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-8 lg:px-12 xl:px-16 py-20 lg:py-32">
+      <div className="flex flex-col items-center px-8 max-w-4xl lg:px-12 xl:px-16 py-14 lg:py-20">
         {/* Main Title */}
-        <div className="text-center mb-20">
-          <h2 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-6">
+        <div className="flex flex-col gap-6 md:gap-6 items-center text-center text-left pb-16 mt-8">
+          <div className="text-xl text-foreground-secondary font-light w-full md:w-1/3">
+            {subTitle}
+          </div>
+          <div className="text-2xl lg:text-3xl xl:text-4xl font-light w-full">
             {mainTitle}
-          </h2>
+          </div>
         </div>
-
-        {/* Three Pillars */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16 mb-20">
-          {pillars.map((pillar, index) => (
-            <div key={index} className="text-center">
-              <div className="flex justify-center mb-6">
-                <div className="p-4 rounded-full bg-accent text-foreground">
-                  {pillar.icon}
-                </div>
-              </div>
-              <h3 className="text-xl lg:text-2xl font-semibold mb-4">
-                {pillar.title}
-              </h3>
-              <p className="text-foreground-secondary leading-relaxed">
-                {pillar.description}
-              </p>
+        <div className="flex flex-col text-2xl lg:text-3xl xl:text-4xl mb-6 font-light w-full gap-5">
+          <div className="flex w-full p-8 border-b-2 border-foreground text-foreground bg-background-secondary rounded-3xl items-center hover:bg-background-tertiary hover:-translate-y-2 transition-all">
+            <div className="flex w-full justify-center">BTC</div>
+            <MoveRight size={64} strokeWidth={1.5} />
+            <div className="flex w-full justify-center">USD</div>
+          </div>
+          <div className="flex w-full p-8 border-b-2 border-foreground text-foreground bg-background-secondary rounded-3xl items-center hover:bg-background-tertiary hover:-translate-y-2 transition-all">
+            <div className="flex w-full justify-center">ETH</div>
+            <MoveRight size={64} strokeWidth={1.5} />
+            <div className="flex w-full justify-center">USD</div>
+          </div>
+          <div className="flex w-full p-12 rounded-3xl items-center">
+            <div className="flex w-full justify-center text-lg">
+              More pairs to come...
             </div>
-          ))}
-        </div>
-
-        {/* Highlighted Callout */}
-        <div className="bg-accent rounded-2xl p-8 lg:p-12 text-center">
-          <p className="text-lg lg:text-xl font-medium leading-relaxed text-foreground">
-            {calloutText}
-          </p>
+          </div>
+          <div className="flex flex-col text-center text-4xl gap-2 w-full items-center justify-center text-foreground">
+            Bringing altcoin inverse perps on-chain for the first time.
+          </div>
         </div>
       </div>
     </section>
