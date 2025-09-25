@@ -17,11 +17,10 @@ const HomePage = () => {
         <section id="main">
           <MainSection />
         </section>
-        {/*
         <section id="technology">
           <TechnologySection />
         </section>
-        <section id="markets">
+        {/*<section id="markets">
           <MarketsSection />
         </section>*/}
       </main>

@@ -68,7 +68,7 @@ const MainSection = ({
       {/* Text Bar */}
       <div className="w-full bg-background-secondary py-4">
         <div className="px-8 lg:px-12 xl:px-16">
-          <p className="text-sm text-foreground font-light uppercase tracking-widest">
+          <p className="text-xs text-foreground uppercase tracking-widest">
             {textBar}
           </p>
         </div>

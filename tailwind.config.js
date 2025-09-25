@@ -23,6 +23,7 @@ module.exports = {
       colors: {
         background: "var(--color-background)",
         "background-secondary": "var(--color-background-secondary)",
+        "background-tertiary": "var(--color-background-tertiary)",
         "background-inverse": "var(--color-background-inverse)",
         foreground: "var(--color-foreground)",
         "foreground-secondary": "var(--color-foreground-secondary)",
