@@ -22,7 +22,7 @@ const MainSection = ({
   pillars = [
     {
       icon: <Coins strokeWidth={1} className="w-14 h-14 sm:w-12 sm:h-12" />,
-      title: "Crypto-Margined Without Haircuts",
+      title: "Crypto-margined without haircuts",
       description:
         "Keep your collateral and PnL in BTC or ETH. Capital efficiency through 100% of your margin available.",
     },
@@ -49,13 +49,13 @@ const MainSection = ({
           />
         </div>
       ),
-      title: "Built On Hyperliquid",
+      title: "Built on Hyperliquid",
       description:
         "Institutional-grade execution, powered by Hyperliquid's trading engine.",
     },
     {
       icon: <Waypoints strokeWidth={1} className="w-14 h-14 sm:w-12 sm:h-12" />,
-      title: "Decentralized & Non-Custodial",
+      title: "Decentralized & non-custodial",
       description:
         "Permissionless and open settlement without KYC. Your keys, your margin.",
     },
@@ -91,7 +91,7 @@ const MainSection = ({
           {pillars.map((pillar, index) => (
             <div
               key={index}
-              className="flex sm:hover:bg-background-secondary sm:hover:shadow-lg sm:hover:border-transparent sm:hover:rounded-2xl sm:hover:-translate-y-2 border-b border-foreground-secondary flex-col sm:flex-row px-0 sm:px-8 py-6 items-start sm:items-center gap sm:gap-12 transition-all"
+              className="flex sm:hover:bg-background-secondary sm:hover:border-transparent sm:hover:rounded-2xl border-b border-foreground-secondary/70 flex-col sm:flex-row px-0 sm:px-8 hover:sm:pl-12 py-6 items-start sm:items-center gap sm:gap-12 transition-all"
             >
               <div className="flex w-1/4">
                 <div className="text-foreground">{pillar.icon}</div>

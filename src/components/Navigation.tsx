@@ -156,7 +156,7 @@ const Navigation = () => {
           isVisible ? "translate-y-0" : "-translate-y-32"
         } ${
           hasBackground
-            ? "bg-white/40 dark:bg-white/10 backdrop-blur-3xl border-b md:border border-white/70 dark:border-white/20 md:mx-8 md:my-6"
+            ? "bg-white/40 dark:bg-white/10 backdrop-blur-3xl border-b md:border border-boulder-500/90 dark:border-white/20 md:mx-8 md:my-6"
             : "bg-transparent border border-transparent"
         }`}
       >
